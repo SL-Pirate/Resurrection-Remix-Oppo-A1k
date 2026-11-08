@@ -1,0 +1,7 @@
+cfd127622b6e3e824e1ce128036657c42ae49dfab1a2f459b29a2cb14d8b4b73  boot-magisk-31.1-OP486C-nofbe-fix1.img
+513d3db089d6e37146051b624a9ba107aa13e228f99c7a17372d3106ff6e7e37  twrp-3.7.0_9-OP486C-bringup1-fix1.img
+f57cdf907544d2fdb773e46a026cc3d37eac6687a1d0d6501929e06afb770f47  lk-OP486C-final-menu.bin
+6273c4cf06df6183e0484611679f82b89806d7af5c239f120b522716e998a1cb  vbmeta-OP486C-disable-verification.img
+d3e4b6fd42b193e674216560ef72b7c28f70558fba02cf704ff430f69406c46b  OP486C-telephony-module-payload-v1.tar.gz
+febbb4e7aea9b2f1cdba27a99f4a790aebc3b6928b81563f28966feb105009b8  OP486C-zram-module-payload-v1.tar.gz
+4a38dbb1c6ad5563b3f2c6fbde1ce05a1865cfb6d94e24db50ae455889c0860d  OP486C-btop-module-payload-v1.tar.gz

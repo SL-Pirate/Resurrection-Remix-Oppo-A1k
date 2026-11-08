@@ -1,4 +1,4 @@
-# Keep this repository source-only. Stage specific files, never device dumps.
+# Track only the explicitly listed tested assets; never device dumps.
 /build/
 /downloads/
 /staging/
@@ -27,3 +27,14 @@ __pycache__/
 **/prebuilt/*
 !**/prebuilt/README.md
 **/certs/
+
+# User-approved tested binary artifacts, each below 100 MB.
+/assets/*
+!/assets/SHA256SUMS
+!/assets/boot-magisk-31.1-OP486C-nofbe-fix1.img
+!/assets/twrp-3.7.0_9-OP486C-bringup1-fix1.img
+!/assets/lk-OP486C-final-menu.bin
+!/assets/vbmeta-OP486C-disable-verification.img
+!/assets/OP486C-telephony-module-payload-v1.tar.gz
+!/assets/OP486C-zram-module-payload-v1.tar.gz
+!/assets/OP486C-btop-module-payload-v1.tar.gz

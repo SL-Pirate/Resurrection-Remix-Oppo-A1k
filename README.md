@@ -29,6 +29,6 @@ Tested on one 2 GB handset with stock **CPH1923EX_11_A.43**, board ID **2739**, 
 - [Files to attach to a release](docs/RELEASE_ASSETS.md)
 - [Third-party sources and licensing](THIRD_PARTY_NOTICES.md)
 
-The repository contains source patches, the TWRP device tree, module scripts and recorded artifact hashes. Firmware images, original packages, private logs, device backups, toolchains and signing keys are deliberately outside Git. No command in this README flashes a device.
+The repository contains source patches, the TWRP device tree, module scripts, recorded artifact hashes, and the seven tested binary assets in [assets/](assets/). Each included asset is below 100 MB. The large RR GSI, original packages, private logs, device backups, toolchains and signing keys remain outside Git. No command in this README flashes a device.
 
 This is an independent project, not an official OPPO, Resurrection Remix, TeamWin or Magisk release. The measured results apply to the exact tested configuration, not every phone sold as an A1k.

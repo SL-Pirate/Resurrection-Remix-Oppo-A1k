@@ -1,8 +1,8 @@
 # Release assets
 
-All executable binaries stay outside Git, including files smaller than 100 MB. The source repository is sufficient for review; these are the matching historical tested artifacts.
+The seven tested artifacts below are committed in [assets/](../assets/), each below 100 MB. You can download them directly from Git or optionally attach copies to a GitHub release. The large upstream RR GSI remains outside Git.
 
-| Attach manually | Size (MiB) | Purpose |
+| Included in `assets/` | Size (MiB) | Purpose |
 | --- | ---: | --- |
 | `boot-magisk-31.1-OP486C-nofbe-fix1.img` | 32.00 | BOOT; tested normal Android startup |
 | `twrp-3.7.0_9-OP486C-bringup1-fix1.img` | 32.00 | RECOVERY; standalone TWRP |
@@ -12,7 +12,7 @@ All executable binaries stay outside Git, including files smaller than 100 MB. T
 | `OP486C-zram-module-payload-v1.tar.gz` | 0.00 | op486c_zram: module payload backup, NOT a flashable/installable ZIP |
 | `OP486C-btop-module-payload-v1.tar.gz` | 1.09 | op486c_btop: module payload backup, NOT a flashable/installable ZIP |
 
-Attach `SHA256SUMS` alongside the chosen assets. Core device images and the telephony payload belong together; btop and swap are optional. See [installation notes](INSTALLATION.md) for payload layout and prerequisites. The tarballs are directory payloads, not recovery flash packages.
+Checksums are included as [assets/SHA256SUMS](../assets/SHA256SUMS). If mirroring assets into a release, attach that file too. Core device images and the telephony payload belong together; btop and swap are optional. See [installation notes](INSTALLATION.md) for payload layout and prerequisites. The tarballs are directory payloads, not recovery flash packages.
 
 The only large upstream download is `RR-8.7.3-system-arm64-ab-vanilla-nosu-userdebug.img.xz` (781.03 MiB). Prefer [the upstream download](https://downloads.sourceforge.net/project/resurrection-remix-q-gsi/compressed/system-arm64-ab-vanilla-nosu-userdebug.img.xz). If you choose to mirror it, use that completed `.img.xz`, not the `.part`, chunk directory, or expanded raw image. The upstream XZ expands to an Android sparse system image; the separately verified raw system SHA-256 is `017669590688b0d359329c41200b17a70d8209db0eef782d1fdf4390f654293f`.
 
