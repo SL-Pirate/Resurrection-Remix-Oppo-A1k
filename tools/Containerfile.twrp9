@@ -1,0 +1,18 @@
+FROM docker.io/library/ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates git gnupg curl openssh-client \
+    build-essential gcc-multilib g++-multilib flex bison bc \
+    zip unzip cpio lzop rsync file python2 python3 \
+    libssl-dev libxml2-utils xsltproc zlib1g-dev lib32z1-dev \
+    libncurses5 libncurses5-dev lib32ncurses5-dev \
+    libx11-dev x11proto-core-dev libgl1-mesa-dev \
+    fontconfig openjdk-8-jdk-headless && \
+    ln -s /usr/bin/python2 /usr/local/bin/python && \
+    rm -rf /var/lib/apt/lists/*
+
+# Some Android 9 toolchain launchers use this absolute shebang.
+RUN ln -s /usr/bin/python2 /usr/bin/python
+
+WORKDIR /work

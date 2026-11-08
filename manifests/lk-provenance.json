@@ -1,0 +1,13 @@
+{
+  "base_repository": "https://github.com/svoboda18/lk",
+  "base_commit": "37ec8bcbc4361c0e267617f517d154656804c17a",
+  "base_archive_sha256": "6a1f380172a548fbdaa029f53eadb4e05b8cce466e12687d350926055ab0f331",
+  "port_repository": "https://github.com/calan152/oppo-a1k-lk",
+  "port_commit": "85dafe8efffac84f601d32b6a086f0cd4ab512c1",
+  "build_command": "make -j8 oppo6762_18540 NO_SIGN=yes OPPO_RESCUE_FASTBOOT=yes",
+  "container": "localhost/oppo-a1k-twrp9:local",
+  "latest_build": "final-menu",
+  "latest_sha256": "f57cdf907544d2fdb773e46a026cc3d37eac6687a1d0d6501929e06afb770f47",
+  "patch": "patches/lk/0001-op486c-tested-port.patch",
+  "patch_sha256": "9cd7172b998a7757b820cbbda0fc40c46d79964a0e1f1ac322cf11c9c999a2b8"
+}

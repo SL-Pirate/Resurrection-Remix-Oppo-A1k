@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: Apache-2.0
+# OPPO A1k CPH1923, stock CPH1923EX_11_A.43.
+DEVICE_PATH := device/oppo/OP486C
+ALLOW_MISSING_DEPENDENCIES := true
+
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_VARIANT := generic
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := generic
+
+TARGET_BOARD_PLATFORM := mt6765
+TARGET_BOOTLOADER_BOARD_NAME := oppo6762_18540
+TARGET_NO_BOOTLOADER := true
+TARGET_SCREEN_DENSITY := 320
+
+# Preserve the stock recovery v1 header and kernel with its appended DTB.
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+BOARD_BOOTIMG_HEADER_VERSION := 1
+BOARD_KERNEL_BASE := 0x40078000
+BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_RAMDISK_OFFSET := 0x11a88000
+BOARD_KERNEL_TAGS_OFFSET := 0x07808000
+BOARD_KERNEL_PAGESIZE := 2048
+# Android's image rule appends buildvariant=eng for the recovery build.
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --second_offset 0x00e88000
+BOARD_INCLUDE_RECOVERY_DTBO := true
+# This is the embedded recovery DTBO, not the separate 16 MiB dtbo partition.
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/recovery_dtbo
+
+BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 5033164800
+BOARD_VENDORIMAGE_PARTITION_SIZE := 964689920
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 23765958144
+BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+
+# Retain actual stock version metadata. This does not bypass rollback checks.
+PLATFORM_VERSION := 9.0.0
+PLATFORM_SECURITY_PATCH := 2021-05-05
+VENDOR_SECURITY_PATCH := 2021-05-05
+# Add an unsigned AVB hash footer. OEM signature acceptance requires unlocking;
+# no generated vbmeta or dtbo build artifact is authorized for installation.
+BOARD_AVB_ENABLE := true
+
+TW_THEME := portrait_hdpi
+TW_DEVICE_VERSION := OP486C-bringup1
+TW_EXTRA_LANGUAGES := true
+TW_USE_TOOLBOX := true
+TW_NO_SCREEN_BLANK := true
+TW_NO_REBOOT_BOOTLOADER := true
+TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+# Initial bring-up has no vendor Keymaster/Gatekeeper service stack. Enabling
+# FBE now can hang waiting for hwservicemanager. Encrypted data is unsupported.
+TW_INCLUDE_CRYPTO := false

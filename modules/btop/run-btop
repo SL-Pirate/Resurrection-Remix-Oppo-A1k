@@ -1,0 +1,12 @@
+#!/system/bin/sh
+if [ "$(id -u)" != 0 ]; then
+    echo "Run su first, then btop." >&2
+    exit 1
+fi
+BTOP_MODULE=/data/adb/modules/op486c_btop
+BTOP_CONFIG=/data/adb/op486c-btop
+umask 077
+mkdir -p "$BTOP_CONFIG" || exit 1
+export LD_LIBRARY_PATH="$BTOP_MODULE/lib"
+export TERM="${TERM:-xterm-256color}"
+exec "$BTOP_MODULE/bin/btop" --force-utf --config "$BTOP_CONFIG/btop.conf" "$@"

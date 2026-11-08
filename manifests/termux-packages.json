@@ -1,0 +1,14 @@
+{
+  "btop": {
+    "version": "1.4.8",
+    "arch": "aarch64",
+    "sha256": "31304492618a02ffb06aceca1ffe6bf3fe301fee1eabf376196bb5dfbeaaa492",
+    "url": "https://packages-cf.termux.dev/apt/termux-root/pool/stable/b/btop/btop_1.4.8_aarch64.deb"
+  },
+  "libcxx": {
+    "version": "30",
+    "arch": "aarch64",
+    "sha256": "53d0b84a7ba7459024257cb94d5b136fe13ef858567f65a8064b35950799f2ca",
+    "url": "https://packages-cf.termux.dev/apt/termux-main/pool/main/libc/libc++/libc++_30_aarch64.deb"
+  }
+}

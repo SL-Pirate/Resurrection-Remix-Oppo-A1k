@@ -1,0 +1,6 @@
+id=op486c_btop
+name=OP486C btop
+version=1.4.8
+versionCode=10408
+author=Local OP486C setup
+description=Official Termux ARM64 btop and private C++ runtime; root command in /sbin.

@@ -1,0 +1,63 @@
+{
+  "device": "OPPO A1k CPH1923 / OP486C / board 2739 / HX8394F",
+  "date": "2026-11-08",
+  "assets": [
+    {
+      "filename": "boot-magisk-31.1-OP486C-nofbe-fix1.img",
+      "size_bytes": 33554432,
+      "sha256": "cfd127622b6e3e824e1ce128036657c42ae49dfab1a2f459b29a2cb14d8b4b73",
+      "role": "BOOT; tested normal Android startup",
+      "category": "device-specific firmware derivative"
+    },
+    {
+      "filename": "twrp-3.7.0_9-OP486C-bringup1-fix1.img",
+      "size_bytes": 33554432,
+      "sha256": "513d3db089d6e37146051b624a9ba107aa13e228f99c7a17372d3106ff6e7e37",
+      "role": "RECOVERY; standalone TWRP",
+      "category": "device-specific firmware derivative"
+    },
+    {
+      "filename": "lk-OP486C-final-menu.bin",
+      "size_bytes": 1048576,
+      "sha256": "f57cdf907544d2fdb773e46a026cc3d37eac6687a1d0d6501929e06afb770f47",
+      "role": "LK primary only; stock LK2 retained",
+      "category": "device-specific firmware derivative"
+    },
+    {
+      "filename": "vbmeta-OP486C-disable-verification.img",
+      "size_bytes": 8388608,
+      "sha256": "6273c4cf06df6183e0484611679f82b89806d7af5c239f120b522716e998a1cb",
+      "role": "AVB configuration used by unlocked setup",
+      "category": "device-specific firmware derivative"
+    },
+    {
+      "filename": "OP486C-telephony-module-payload-v1.tar.gz",
+      "size_bytes": 4253476,
+      "sha256": "d3e4b6fd42b193e674216560ef72b7c28f70558fba02cf704ff430f69406c46b",
+      "role": "op486c_telephony_fix: module payload backup, NOT a flashable/installable ZIP",
+      "category": "required cellular repair"
+    },
+    {
+      "filename": "OP486C-zram-module-payload-v1.tar.gz",
+      "size_bytes": 762,
+      "sha256": "febbb4e7aea9b2f1cdba27a99f4a790aebc3b6928b81563f28966feb105009b8",
+      "role": "op486c_zram: module payload backup, NOT a flashable/installable ZIP",
+      "category": "optional utility"
+    },
+    {
+      "filename": "OP486C-btop-module-payload-v1.tar.gz",
+      "size_bytes": 1144081,
+      "sha256": "4a38dbb1c6ad5563b3f2c6fbde1ce05a1865cfb6d94e24db50ae455889c0860d",
+      "role": "op486c_btop: module payload backup, NOT a flashable/installable ZIP",
+      "category": "optional utility"
+    }
+  ],
+  "upstream_rr": {
+    "filename": "RR-8.7.3-system-arm64-ab-vanilla-nosu-userdebug.img.xz",
+    "size_bytes": 818972692,
+    "sha256": "2f6281b569e240356781244fccbbcf70dc8462a5c5eb3ba53141195e11c1334f",
+    "url": "https://downloads.sourceforge.net/project/resurrection-remix-q-gsi/compressed/system-arm64-ab-vanilla-nosu-userdebug.img.xz",
+    "role": "Unchanged upstream compressed GSI; prefer linking upstream instead of reuploading"
+  },
+  "notice": "Technical inventory, not blanket redistribution clearance. No identity-bearing backups included."
+}

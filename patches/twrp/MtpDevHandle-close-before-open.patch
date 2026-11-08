@@ -1,0 +1,12 @@
+--- a/bootable/recovery/mtp/ffs/MtpDevHandle.cpp
++++ b/bootable/recovery/mtp/ffs/MtpDevHandle.cpp
+@@ -60,6 +60,9 @@
+ }
+ 
+ int MtpDevHandle::start(bool /* ptp */) {
++	// The legacy MTP driver permits only one open file descriptor.
++	// Release the constructor's descriptor before reopening it read/write.
++	mFd.reset();
+ 	mFd.reset(TEMP_FAILURE_RETRY(open(mtp_dev_path, O_RDWR)));
+ 	if (mFd == -1) return -1;
+ 	return 0;

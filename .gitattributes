@@ -1,0 +1,2 @@
+# Patch context intentionally preserves upstream whitespace.
+*.patch -whitespace

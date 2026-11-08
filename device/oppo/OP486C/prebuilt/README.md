@@ -1,0 +1,1 @@
+Supply `kernel` and `recovery_dtbo` from matching stock CPH1923EX_11_A.43 recovery. These are local firmware inputs and are not committed. `recovery_dtbo` is the embedded recovery overlay, not the separate DTBO partition image.

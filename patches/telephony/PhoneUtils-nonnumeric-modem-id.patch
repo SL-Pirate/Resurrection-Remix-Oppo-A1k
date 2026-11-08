@@ -1,0 +1,23 @@
+--- a/smali/com/android/phone/PhoneUtils.smali
++++ b/smali/com/android/phone/PhoneUtils.smali
+@@ -1317,10 +1317,19 @@
+ 
+     .line 1494
+     :cond_1
++    :try_start_modem_id
+     invoke-static {v7}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+ 
+     move-result v7
+-
++    :try_end_modem_id
++    .catch Ljava/lang/NumberFormatException; {:try_start_modem_id .. :try_end_modem_id} :catch_modem_id
++    goto :modem_id_parsed
++
++    :catch_modem_id
++    move-exception v7
++    goto :cond_2
++
++    :modem_id_parsed
+     if-nez v7, :cond_2
+ 
+     .line 1495

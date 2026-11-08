@@ -1,0 +1,10 @@
+{
+  "original_apk_sha256": "4b78cbe705431145b30e08a1b4bddc10e8274ed5c48eca5b81cf239309c893f8",
+  "matching_signer_sha256": "c8a2e9bccf597c2fb6dc66bee293fc13f2fc47ec77bc6b2b0d52c11f51192ab8",
+  "change": "Catch nonnumeric modem IDs and continue to existing fallback; preserve numeric handling",
+  "patched_apk_sha256": "bd5804f4535f9246018ecf65b92a4722a09019e3405455011d4002c94a2c72fd",
+  "apktool": "2.11.1",
+  "changed_payload_members": [
+    "classes.dex"
+  ]
+}

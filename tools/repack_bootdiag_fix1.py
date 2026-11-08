@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+"""Create an offline-only diagnostic variant of the verified combined fix1."""
+import json
+from pathlib import Path
+import shutil
+import subprocess
+from repack_twrp_fix1 import ROOT, MAGISKBOOT, INPUTS, PARTITION_SIZE, header, cpio_entries, digest
+from verify_finalize_twrp_magisk_fix1 import avb_hash
+
+SOURCE = ROOT / 'staging/magisk-31.1-twrp-OP486C-fix1-experimental.img'
+ASSETS = ROOT / 'tools/bootdiag-fix1'
+WORK = ASSETS / 'repack'
+OUTPUT = ROOT / 'staging/magisk-31.1-twrp-OP486C-fix1-diag1-UNTESTED.img'
+REPORT = ROOT / 'evidence/twrp-magisk-fix1-diag1-verification.json'
+
+
+def main():
+    assert not WORK.exists() and not OUTPUT.exists() and not REPORT.exists()
+    original = SOURCE.read_bytes()
+    assert digest(original) == 'd9afeae649348cfeb81bd48dbde266c5de8f328cfd5c268a21a4ed607c040e12'
+    assert digest((ASSETS / 'busybox').read_bytes()) == '4d60ab3f5a59ebb2ca863f2f514e6924401b581e9b64f602665c008177626651'
+    WORK.mkdir()
+    logs = []
+    def run(cmd, cwd=WORK):
+        result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+        logs.append(repr(cmd) + '\n' + result.stdout + result.stderr)
+        (WORK / 'repack.log').write_text('\n'.join(logs))
+        assert result.returncode == 0, result.stdout + result.stderr
+        return result.stdout + result.stderr
+    def avb(*args):
+        return run(['podman','run','--rm','--network=none','--security-opt','label=disable',
+                    '-v',str(WORK)+':/work:rw','-v',str(INPUTS/'avbtool-v1.1.0.py')+':/avbtool:ro',
+                    'localhost/oppo-a1k-twrp9:local','python2','/avbtool',*args])
+    shutil.copyfile(SOURCE, WORK / 'base.img')
+    avb('erase_footer','--image','/work/base.img')
+    run([str(MAGISKBOOT),'unpack','base.img'])
+    before = cpio_entries(WORK / 'ramdisk.cpio')
+    files = {'overlay.d/op486c-bootdiag.rc':('0644','op486c-bootdiag.rc'),
+             'overlay.d/sbin/op486c-bootdiag/busybox':('0750','busybox'),
+             'overlay.d/sbin/op486c-bootdiag/logger.sh':('0750','logger.sh')}
+    additions = ['mkdir 0750 overlay.d/sbin/op486c-bootdiag']
+    for target, (mode, source) in files.items():
+        assert target not in before
+        shutil.copyfile(ASSETS / source, WORK / source)
+        additions.append(f'add {mode} {target} {source}')
+    run([str(MAGISKBOOT),'cpio','ramdisk.cpio',*additions])
+    (WORK / 'kernel').rename(WORK / 'kernel-original')
+    run([str(MAGISKBOOT),'repack','base.img','recovery.img'])
+    avb('add_hash_footer','--image','/work/recovery.img','--partition_name','recovery',
+        '--partition_size',str(PARTITION_SIZE),'--algorithm','NONE','--salt',avb_hash(original)['salt'])
+    avb_result = avb('verify_image','--image','/work/recovery.img')
+    verify = WORK / 'verify'; verify.mkdir()
+    run([str(MAGISKBOOT),'unpack',str(WORK/'recovery.img')], verify)
+    after = cpio_entries(verify / 'ramdisk.cpio')
+    assert set(after) - set(before) == set(files) | {'overlay.d/sbin/op486c-bootdiag'}
+    assert all(after[name] == value for name, value in before.items())
+    for target, (mode, source) in files.items():
+        assert after[target]['sha256'] == digest((ASSETS / source).read_bytes())
+        assert after[target]['mode'] == 0o100000 + int(mode, 8)
+    final = (WORK / 'recovery.img').read_bytes()
+    old, new = header(original), header(final)
+    changes = {k:{'base':old[k],'diagnostic':new[k]} for k in old if old[k] != new[k]}
+    assert set(changes) <= {'ramdisk_size','recovery_dtbo_offset','image_id'}
+    assert original[old['page_size']:old['page_size']+old['kernel_size']] == final[new['page_size']:new['page_size']+new['kernel_size']]
+    for name in ['kernel_dtb','recovery_dtbo']:
+        assert (WORK/name).read_bytes() == (verify/name).read_bytes()
+    assert (WORK/'kernel-original').read_bytes() == (verify/'kernel').read_bytes()
+    footer = avb_hash(final)
+    assert footer['hash_matches'] and footer['image_size_matches_footer'] and len(final) == PARTITION_SIZE
+    with OUTPUT.open('xb') as output:
+        output.write(final)
+    report = {'result':'passed: offline diagnostic repack static checks only','image':str(OUTPUT),
+              'sha256':digest(final),'size':len(final),'source':str(SOURCE),'source_sha256':digest(original),
+              'added_entries':{k:after[k] for k in sorted(set(after)-set(before))},
+              'all_existing_ramdisk_entries_identical':True,'compressed_kernel_identical':True,
+              'decompressed_kernel_identical':True,'kernel_dtb_identical':True,'recovery_dtbo_identical':True,
+              'header_changes':changes,'avb':footer,'avbtool_verification':avb_result,
+              'design':{'trigger':'early-init via Magisk overlay.d','seclabel':'u:r:magisk:s0',
+                        'cache_block':'/dev/block/mmcblk0p39','cache_expected_sectors':884736,
+                        'private_mount':'/dev/op486c-bootdiag-cache',
+                        'logs':'cache filesystem /op486c-bootdiag/<kernel-boot-id>',
+                        'cache_wait_seconds':60,'normal_deadline_seconds':480,'supervisor_ceiling_seconds':540,
+                        'dmesg_limit_each':1048576,'logcat_rotate_kib':256,'logcat_rotated_count':8,
+                        'expected_peak_logs_bytes_less_than':6291456,'size_guard_kib':8192,
+                        'minimum_free_cache_kib':16384,'stop_on_boot_complete':True},
+              'scripts_syntax_checked_with_pinned_arm64_busybox_under_qemu':True,
+              'sources':['https://topjohnwu.github.io/Magisk/guides.html#root-directory-overlay-system',
+                         'https://github.com/topjohnwu/Magisk/blob/v31.1/native/src/init/rootdir.cpp',
+                         'https://github.com/topjohnwu/Magisk/blob/v31.1/native/src/init/rootdir.rs',
+                         'evidence/device-layout.txt','evidence/partitions.json'],
+              'limitations':['Logs only if Magisk reaches Android init and the overlay service starts.',
+                             'No logs for earlier bootloader/kernel/Magisk-init stalls; no live display console.',
+                             'Cache must mount successfully and have enough free space; logcat needs Android logd.',
+                             'Timeouts and unmount cleanup are best effort during uninterruptible kernel I/O.',
+                             'Existing logs are retained across boots; every boot may add approximately 6 MiB.',
+                             'The logger changes boot timing and performs cache writes; it is diagnostic only.'],
+              'device_operations':False,'compiled_locally':False,'boot_tested':False,
+              'script':str(Path(__file__).resolve()),'log':str(WORK/'repack.log')}
+    REPORT.write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps({k:report[k] for k in ['result','image','sha256','size']},indent=2))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,6 @@
+id=op486c_zram
+name=OP486C zRAM swap
+version=1.0
+versionCode=1
+author=Local OP486C setup
+description=Enable 1 GiB LZ4 zRAM plus 4 GiB storage swap, with zRAM preferred.

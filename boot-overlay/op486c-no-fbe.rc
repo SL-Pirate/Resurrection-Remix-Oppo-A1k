@@ -1,0 +1,7 @@
+# Add as overlay.d/op486c-no-fbe.rc to the existing diagnostic Magisk image.
+# Add no-fbe.sh as overlay.d/sbin/op486c-bootdiag/no-fbe.sh (mode 0750).
+# Reuse the unchanged official BusyBox already present in op486c-bootdiag.
+# Magisk substitutes ${MAGISKTMP} before Android init parses this rc.
+# Synchronous exec completes before the later fs event can call mount_all.
+on early-init
+    exec u:r:magisk:s0 root root -- ${MAGISKTMP}/op486c-bootdiag/busybox timeout -s TERM -k 2 10 ${MAGISKTMP}/op486c-bootdiag/busybox sh ${MAGISKTMP}/op486c-bootdiag/no-fbe.sh ${MAGISKTMP}/op486c-bootdiag/busybox
