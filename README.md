@@ -9,6 +9,7 @@ Tested on one 2 GB handset with stock **CPH1923EX_11_A.43**, board ID **2739**, 
 | Feature | Result |
 | --- | --- |
 | RR startup / Magisk root | Working after reboot; SELinux Enforcing |
+| Secure screen lock | Pattern enrollment and unlock work after reboot with the Keymaster module |
 | TWRP | Display, touch, root ADB, internal storage and SD card work |
 | Wi-Fi, front/rear camera previews, flash, speaker | User confirmed |
 | Light/proximity sensors | Runtime events observed |
@@ -25,10 +26,11 @@ Tested on one 2 GB handset with stock **CPH1923EX_11_A.43**, board ID **2739**, 
 - [Build and source provenance](docs/BUILD.md)
 - [Installation scope and recovery](docs/INSTALLATION.md)
 - [What broke and what fixed it](docs/TECHNICAL_NOTES.md)
+- [Screen-lock failure, framework crash loop and repair](docs/SCREEN_LOCK_FIX.md)
 - [Boot menu and maintenance](docs/MAINTENANCE.md)
 - [Files to attach to a release](docs/RELEASE_ASSETS.md)
 - [Third-party sources and licensing](THIRD_PARTY_NOTICES.md)
 
-The repository contains source patches, the TWRP device tree, module scripts, recorded artifact hashes, and the seven tested binary assets in [assets/](assets/). Each included asset is below 100 MB. The large RR GSI, original packages, private logs, device backups, toolchains and signing keys remain outside Git. No command in this README flashes a device.
+The repository contains source patches, the TWRP device tree, module scripts, recorded artifact hashes, and the tested binary assets in [assets/](assets/). Each included asset is below 100 MB. The large RR GSI, original packages, private logs, device backups, toolchains and signing keys remain outside Git. No command in this README flashes a device.
 
 This is an independent project, not an official OPPO, Resurrection Remix, TeamWin or Magisk release. The measured results apply to the exact tested configuration, not every phone sold as an A1k.

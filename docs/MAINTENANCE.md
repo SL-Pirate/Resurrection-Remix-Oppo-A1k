@@ -10,6 +10,8 @@ The tested BOOT ramdisk intentionally retains `RECOVERYMODE=true` for legacy-SAR
 
 ## Modules and rollback
 
+- `op486c_keymaster_compat`: required for the tested secure-pattern setup. **Disabling it may restore the framework crash loop**; see [screen-lock recovery notes](SCREEN_LOCK_FIX.md) before rollback.
+
 - `op486c_telephony_fix`: guards the nonnumeric modem ID crash; supplied as an overlay payload. Disable in Magisk and reboot to restore the original system APK.
 - `op486c_zram`: starts compressed swap, and storage swap if `/data/adb/op486c-storage.swap` already exists. Disable and reboot to stop both. The inactive swapfile can then be removed to reclaim 4 GiB. The service never allocates the file itself.
 - `op486c_btop`: exposes `/sbin/btop`. Run `su`, then `btop`. Grant the terminal root in Magisk if needed. GPU monitoring is disabled in this upstream build. Configuration is `/data/adb/op486c-btop/btop.conf`.

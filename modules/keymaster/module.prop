@@ -1,0 +1,6 @@
+id=op486c_keymaster_compat
+name=OP486C RR Keymaster compatibility
+version=1.0
+versionCode=1
+author=Local OP486C setup
+description=Complete PHH version-property compatibility for VNDK28 and create stock Trustonic storage directory.

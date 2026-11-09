@@ -50,6 +50,13 @@
       "sha256": "4a38dbb1c6ad5563b3f2c6fbde1ce05a1865cfb6d94e24db50ae455889c0860d",
       "role": "op486c_btop: module payload backup, NOT a flashable/installable ZIP",
       "category": "optional utility"
+    },
+    {
+      "filename": "OP486C-keymaster-module-payload-v1.tar.gz",
+      "size_bytes": 63280,
+      "sha256": "c132886790aa8fa4c866ceb15dbae04db830e9643afc07362c506f99870a26f0",
+      "role": "Keymaster compatibility and secure screen-lock repair; module payload, not installer ZIP",
+      "category": "security-service compatibility repair"
     }
   ],
   "upstream_rr": {

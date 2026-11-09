@@ -25,3 +25,7 @@ Recovery uses the stock MediaTek configfs/musb-hdrc USB path. The MTP fix closes
 ## Optional memory setup
 
 The stock kernel supports zRAM but does not expose zswap or zRAM backing-device writeback. The tested arrangement is two independent swap areas: 1 GiB LZ4 zRAM at priority 100 and a fully allocated 4 GiB ext4 swapfile at priority 10. Swappiness remains 60. This is not zswap: existing zRAM pages are not automatically evicted into the storage swapfile. Storage swap is slower and writes to internal flash. Neither swap area adds physical RAM.
+
+## Secure screen lock and post-enrollment framework crash
+
+Two compatibility gaps were repaired: missing Trustonic storage setup for `crypto.state=unsupported`, and an unpatched VNDK28 Keymaster property consumer causing error -62. Pattern enrollment and unlock now work after reboot. See [diagnosis, repair and recovery details](SCREEN_LOCK_FIX.md). Userdata remains unencrypted.

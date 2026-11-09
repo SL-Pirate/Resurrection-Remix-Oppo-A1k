@@ -1,6 +1,6 @@
 # Release assets
 
-The seven tested artifacts below are committed in [assets/](../assets/), each below 100 MB. You can download them directly from Git or optionally attach copies to a GitHub release. The large upstream RR GSI remains outside Git.
+The tested artifacts below are committed in [assets/](../assets/), each below 100 MB. You can download them directly from Git or optionally attach copies to a GitHub release. The large upstream RR GSI remains outside Git.
 
 | Included in `assets/` | Size (MiB) | Purpose |
 | --- | ---: | --- |
@@ -11,6 +11,7 @@ The seven tested artifacts below are committed in [assets/](../assets/), each be
 | `OP486C-telephony-module-payload-v1.tar.gz` | 4.06 | op486c_telephony_fix: module payload backup, NOT a flashable/installable ZIP |
 | `OP486C-zram-module-payload-v1.tar.gz` | 0.00 | op486c_zram: module payload backup, NOT a flashable/installable ZIP |
 | `OP486C-btop-module-payload-v1.tar.gz` | 1.09 | op486c_btop: module payload backup, NOT a flashable/installable ZIP |
+| `OP486C-keymaster-module-payload-v1.tar.gz` | 0.06 | Required Keymaster/screen-lock compatibility repair; module payload |
 
 Checksums are included as [assets/SHA256SUMS](../assets/SHA256SUMS). If mirroring assets into a release, attach that file too. Core device images and the telephony payload belong together; btop and swap are optional. See [installation notes](INSTALLATION.md) for payload layout and prerequisites. The tarballs are directory payloads, not recovery flash packages.
 
@@ -21,3 +22,5 @@ Published hashes and exact byte counts are in [release-assets.json](../manifests
 Never attach full stock backups, NVRAM/NVDATA, protect/persist partitions, GPT dumps, seccfg, para, expdb, userdata, radio/crash logs, private keys or local access details. Exclude all RAM-ONLY, UNTESTED, experimental and rejected images.
 
 Firmware derivatives retain upstream/vendor licensing obligations. See [third-party notices](../THIRD_PARTY_NOTICES.md). The source tree does not imply that every binary is cleared for public redistribution.
+
+The Keymaster payload was added after pattern lock/unlock and reboot persistence were confirmed. Read [its recovery caveats](SCREEN_LOCK_FIX.md) before disabling it.

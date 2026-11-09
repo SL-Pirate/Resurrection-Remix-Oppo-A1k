@@ -38,3 +38,4 @@ __pycache__/
 !/assets/OP486C-telephony-module-payload-v1.tar.gz
 !/assets/OP486C-zram-module-payload-v1.tar.gz
 !/assets/OP486C-btop-module-payload-v1.tar.gz
+!/assets/OP486C-keymaster-module-payload-v1.tar.gz
